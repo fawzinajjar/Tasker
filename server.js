@@ -7,20 +7,17 @@ const app = express();
 // Connect to database
 dbconnect();
 
-// MiddleWare
+// Init MiddleWare
 app.use(express.json({ extended: false }));
 
 // Routes configuration
 //main
-app.get("/", (req, res) => res.send({ msg: "Response Sent to /" }));
+app.get("/", (req, res) => res.send("server"));
 //secodary .use that needs middleware
-app.use("/login", (req, res) => res.send({ msg: "Response sent to /login" }));
-app.use("/dashboard", (req, res) =>
-  res.send({ msg: "Response Sent to /dashboard" })
-);
-app.use("/register", (req, res) =>
-  res.send({ msg: "Response Sent to /register" })
-);
+
+app.use("/login", require("./routes/login"));
+app.use("/dashboard", require("./routes/dashboard"));
+app.use("/register", require("./routes/register"));
 
 // Server listining
 const PORT = process.env.PORT || 5000;
