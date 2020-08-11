@@ -10,6 +10,10 @@ const TaskSchema = new mongoose.Schema({
     type: Date,
     default: Date().now,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
 });
 
 module.exports = Task = mongoose.model("task", TaskSchema);

@@ -1,0 +1,4 @@
+{
+  "jwtSecret": "fawzinajjar",
+  "URI": "mongodb+srv://tasker:tasker@skillconnect.a6cng.mongodb.net/Tasker?retryWrites=true&w=majority"
+}

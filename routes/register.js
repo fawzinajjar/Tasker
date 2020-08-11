@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const config = require("config");
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const auth = require("../middleware/auth");
 
 // Register new User / bcrypt password and sign& return token
 router.post(
@@ -43,13 +45,12 @@ router.post(
       await user.save();
 
       // creating json web token for the user and keep him logged in
-      const jwtSecret = "fawzinajjar";
       const payload = {
         user: {
           id: user.id,
         },
       };
-      jwt.sign(payload, jwtSecret, { expiresIn: 36000000 });
+      jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 36000000 });
       (err, token) => {
         if (err) {
           throw err;
@@ -62,5 +63,17 @@ router.post(
     }
   }
 );
+
+// DELETE Account
+router.delete("/", auth, async (req, res) => {
+  const currentUser = req.user.id;
+  try {
+    const deactivateAcc = await User.findByIdAndDelete(currentUser);
+    const tasks = await Task.deleteMany();
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).send("Server Error");
+  }
+});
 
 module.exports = router;

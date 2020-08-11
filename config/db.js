@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
+const config = require("config");
 
-const dbURL =
-  "mongodb+srv://tasker:tasker@skillconnect.a6cng.mongodb.net/Tasker?retryWrites=true&w=majority";
-
+// Connect To MongoDB function
 const dbconnect = async () => {
   try {
-    await mongoose.connect(dbURL, {
+    await mongoose.connect(config.get("URI"), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
