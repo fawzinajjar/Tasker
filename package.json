@@ -4,7 +4,10 @@
   "description": "todolist app",
   "main": "Server.js",
   "scripts": {
-    "start": "nodemon server"
+    "nodeStart": "node server",
+    "nodemonStart": "nodemon server",
+    "reactStart": "npm start --prefix frontend",
+    "start": "concurrently \"npm run nodemonStart\" \"npm run reactStart\""
   },
   "repository": {
     "type": "git",
