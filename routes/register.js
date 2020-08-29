@@ -16,6 +16,7 @@ router.post(
     check("password", "Password is required !").isLength({ min: 6 }),
   ],
   async (req, res) => {
+    console.log(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json([{ errors: errors.array() }]);
@@ -50,7 +51,7 @@ router.post(
           id: user.id,
         },
       };
-      jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 36000000 });
+      jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 3600000 });
       (err, token) => {
         if (err) {
           throw err;

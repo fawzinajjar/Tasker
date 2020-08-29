@@ -29,9 +29,9 @@ nav ul li {
   border-radius: 30px;
   color: white;
   margin: 6px;
-  border-width: 1.5px;
+  border-width: 3px;
   font-size: 20px;
-  width: 150px;
+  width: 154px;
 }
 
 .btn:hover {
@@ -49,30 +49,31 @@ nav ul li {
 .form-space {
   margin-right: 25%;
   margin-left: 25%;
+  margin-top: 5%;
   text-align: center;
-  margin-top: 15%;
 }
 input::placeholder {
   padding-left: 20px;
-  font-size: 20px;
+  font-size: 17px;
   color: #e8e8e8;
 }
 .input-box {
-  width: 400px;
-
+  width: 600px;
   border-radius: 10px;
   border-color: #66ccff;
   border-bottom-width: 2px;
   border-top-width: 0px;
   border-right-width: 0px;
   border-left-width: 0px;
-  font-size: 25px;
+  font-size: 20px;
   color: #66ccff;
   padding: 10x;
   margin: 4px;
+  height: 40px;
 }
 .hl {
   color: #66ccff;
+  font-size: 50px;
 }
 .w {
   width: 200px;
@@ -122,4 +123,61 @@ a:hover {
   font-size: 100px;
   padding: 10px;
   color: silver;
+}
+.sd {
+  display: inline-block;
+}
+.mr {
+  margin-left: 130px;
+}
+.md {
+  margin-left: 150px;
+}
+.fsize {
+  font-size: 30px;
+  color: #66ccff;
+}
+.hla2 {
+  text-align: center;
+  border: solid;
+  border-width: 1px;
+  border-color: #66ccff;
+  color: #66ccff;
+  background-color: white;
+  margin: 10px;
+  padding-left: 26px;
+  padding-right: 26px;
+  border-radius: 20px;
+}
+.check1 {
+  margin-right: 15px;
+}
+.navTitle {
+  font-family: "Chango", cursive;
+  text-align: center;
+  border: solid;
+  border-width: 1px;
+  border-color: #66ccff;
+  color: #66ccff;
+  background-color: white;
+  margin: 5px;
+  padding-left: 550px;
+  padding-right: 50px;
+  border-radius: 20px;
+}
+.fnfn {
+  font-family: "Chango", cursive;
+}
+
+.alert-box {
+  font-family: "Chango", cursive;
+  font-size: 50;
+  text-align: center;
+  border: solid;
+  border-width: 3px;
+  border-color: red;
+  color: red;
+  background-color: white;
+
+  border-radius: 20px;
 }
