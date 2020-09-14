@@ -11,20 +11,21 @@ router.post(
   "/",
   [auth, check("text", "Please type in TEXT").not().isEmpty()],
   async (req, res) => {
+    console.log("req.text:", req.text);
     let errors = validationResult(req);
     if (!errors.isEmpty) {
-      return res.status(400).json([{ errors: errors.array() }]);
+      return res.status(400).json({ errors: [{ errors: errors.array() }] });
     }
-
+    console.log("req.text:", req.body);
     const text = req.body.text;
 
     try {
       const user = await User.findById(req.user.id).select("-password");
       let task = await Task.findOne({ text });
       if (task) {
-        return res
-          .status(400)
-          .json({ msg: "Can't Add Same Task More Then One Time" });
+        return res.status(400).json({
+          errors: [{ msg: "Can't Add Same Task More Then One Time" }],
+        });
       }
 
       task = new Task({
@@ -34,7 +35,7 @@ router.post(
 
       await task.save();
 
-      res.send({ text });
+      res.status(200).json({ msg: "added success" });
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Server Error");

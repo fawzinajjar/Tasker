@@ -15,6 +15,7 @@ router.post(
   ],
   //validating the request sent
   async (req, res) => {
+    console.log("req: \n", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -25,13 +26,17 @@ router.post(
     try {
       let user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json([{ msg: "Invalid Credentials" }]);
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
       // compare password if it is valid
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json([{ msg: "Invalid Credentials" }]);
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
       const payload = {

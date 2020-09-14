@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import logo from "./whitelogo.png";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout } from "../actions/auth";
 
-export default function Navbar() {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  const authLinks = (
+    <li>
+      <Link to="/">
+        <button onClick={logout} className="btn fnfn">
+          Logout
+        </button>
+      </Link>
+    </li>
+  );
   return (
     <nav>
       <h1 className="navTitle">TASKER</h1>
@@ -14,12 +25,26 @@ export default function Navbar() {
             </button>
           </Link>
         </li>
-        <li>
-          <Link to="/">
-            <button className="btn fnfn">Logout</button>
-          </Link>
-        </li>
+        {!loading && <Fragment>{isAuthenticated ? authLinks : null}</Fragment>}
       </ul>
     </nav>
   );
-}
+};
+
+Navbar.propTypes = {
+  auth: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: (payload) => dispatch(logout(payload)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

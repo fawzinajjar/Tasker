@@ -170,14 +170,15 @@ a:hover {
 }
 
 .alert-box {
+  margin: 2px 30% 2px 30%;
   font-family: "Chango", cursive;
-  font-size: 50;
+  font-size: 10px;
   text-align: center;
   border: solid;
-  border-width: 3px;
+  border-width: 1px;
   border-color: red;
-  color: red;
-  background-color: white;
+  color: white;
+  background-color: red;
 
   border-radius: 20px;
 }

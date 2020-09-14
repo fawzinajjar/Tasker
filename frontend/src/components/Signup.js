@@ -1,20 +1,20 @@
-import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../actions/alert";
+import axios from "axios";
 import PropTypes from "prop-types";
-import { register } from "../actions/auth";
+import { registerSuccess, registerFail } from "../actions/auth";
 
-const Signup = ({ setAlert, register }) => {
+const Signup = (props) => {
   // user input State with use state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    password2: "",
+    confirm_password: "",
+    check_box: false,
   });
-
-  const { name, email, password, password2 } = formData;
 
   // Event Handler Function
   const onChange = (e) =>
@@ -22,28 +22,52 @@ const Signup = ({ setAlert, register }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password !== password2) {
-      setAlert("Passwords do not match", "danger");
-    } else {
-      register({ name, email, password });
+    const { name, email, password, confirm_password, check_box } = formData;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = { name, email, password, confirm_password, check_box };
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/register/",
+        body,
+        config
+      );
+      if (res.status === 200) {
+        props.registerSuccess(res.data);
+        props.setAlert("user register successfully");
+      }
+    } catch (error) {
+      try {
+        const errors = error.response.data.errors;
+        if (errors) {
+          errors.forEach((errors) => props.setAlert(errors.msg));
+        }
+      } catch (error) {}
+      props.registerFail();
     }
   };
   // React component Setup
+  // Redirect
+  if (props.isAuthenticated.isAuthenticated) {
+    return <Redirect to="/todolist" />;
+  }
   return (
     <Fragment>
       <div className="form-space">
         <h3 className="hl sd md fnfn">Sign Up</h3>
         <Link to="/">
-          <a className="sd mr">
-            <i className="fas fa-window-close fsize" />
-          </a>
+          <a className="sd mr" />
         </Link>
         <br />
         <form onSubmit={(e) => onSubmit(e)}>
           <input
             onChange={(e) => onChange(e)}
             name="name"
-            value={name}
+            value={formData.name}
             type="text"
             className="input-box hla2 fnfn"
             placeholder="Name : John Smith"
@@ -52,8 +76,8 @@ const Signup = ({ setAlert, register }) => {
           <input
             onChange={(e) => onChange(e)}
             name="email"
-            value={email}
-            type="email"
+            value={formData.email}
+            type="text"
             className="input-box hla2 fnfn"
             placeholder="Email : john@example.com"
           />
@@ -61,7 +85,7 @@ const Signup = ({ setAlert, register }) => {
           <input
             onChange={(e) => onChange(e)}
             name="password"
-            value={password}
+            value={formData.password}
             type="password"
             className="input-box hla2 fnfn"
             placeholder="Passowrd 6~64 Characters"
@@ -69,15 +93,20 @@ const Signup = ({ setAlert, register }) => {
           <br />
           <input
             onChange={(e) => onChange(e)}
-            name="password2"
+            name="confirm_password"
+            value={formData.confirm_password}
             type="password"
-            value={password2}
             className="input-box hla2 fnfn"
             placeholder="Confirm Password"
           />
           <br />
+
           <label className="hla2">
-            <input className="check1 hla2" required type="checkbox" />
+            <input
+              onClick={() => setFormData({ ...formData, check_box: true })}
+              className="check1 hla2"
+              type="checkbox"
+            />
             <a className="fnfn">User Agreement</a>
           </label>
           <br />
@@ -92,7 +121,19 @@ const Signup = ({ setAlert, register }) => {
 
 Signup.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired,
+  registerSuccess: PropTypes.func.isRequired,
+  registerFail: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+const mapStateToProps = (state) => {
+  return { state: state.alert, isAuthenticated: state.auth };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    registerSuccess: (payload) => dispatch(registerSuccess(payload)),
+    registerFail: (payload) => dispatch(registerFail(payload)),
+    setAlert: (payload) => dispatch(setAlert(payload)),
+  };
 };
 
-export default connect(null, { setAlert, register })(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
