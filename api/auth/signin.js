@@ -1,21 +1,22 @@
-// Imports
+// @ desc Imports
 const express = require("express");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const bcrypt = require("bcrypt");
 const { check, validationResult } = require("express-validator");
-/// Defined methods
+// @desc Defined methods
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 
 // @route   GET api/auth/signin.js
 // @desc    Signin user - Return user token
 // @access  Public
+// @todo
 router.post(
   "/",
-  // Validating body request input Data
-  //@Tool express-validator
+  // @desc Validating body request input Data
+  // @tool express-validator
   [
     check("email", "Please include a valid email").isEmail(),
     check("password", "Password is required").exists(),
@@ -29,8 +30,8 @@ router.post(
 
     const { email, password } = req.body;
     try {
-      // Validating user if already exists
-      //@Tool mongoose
+      // @desc Validating user if already exists
+      // @tool mongoose
       let user = await User.findOne({ email });
       if (!user) {
         return res
@@ -38,8 +39,8 @@ router.post(
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
-      // Validating password if true
-      //@Tool bcrypt
+      // @desc Validating password if true
+      // @tool bcrypt
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res
@@ -52,8 +53,8 @@ router.post(
           id: user.id,
         },
       };
-      // Creating token, Sending TOKEN back
-      //@Tool jasonwebtoken
+      // @desc Creating token & Sending TOKEN back
+      // @tool jasonwebtoken
       jwt.sign(
         payload,
         config.get("jwtSecret"),

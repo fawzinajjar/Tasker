@@ -1,12 +1,12 @@
 # Commenting 
-/// comment for multiple tasks
-// comment on one task
+// @desc   
+// @route  
+// @access 
+// @tool
+// @todo
 
-// @route   GET api/auth/signin.js
-// @desc    Return user token
-// @access  Public
-// @Tool 
-
-# Todo :
-
-# Back-end :
+# Tasks : 
+- Fix imports - api folder
+- fix deactivate file - api folder
+- Fix Server.Js file
+- Models update : ADD  // lastName - age - phoneNumber // - user model
