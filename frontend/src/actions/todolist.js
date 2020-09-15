@@ -1,15 +1,13 @@
 import { ADD_TASK_SUCCESS, ADD_TASK_FAIL } from "../actions/types";
 
-export const addTaskSuccess = (payload) => {
+export const addTaskSuccess = () => {
   return {
     type: ADD_TASK_SUCCESS,
-    payload: payload,
   };
 };
 
-export const addTaskFail = (payload) => {
+export const addTaskFail = () => {
   return {
     type: ADD_TASK_FAIL,
-    payload: payload,
   };
 };

@@ -131,7 +131,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     registerSuccess: (payload) => dispatch(registerSuccess(payload)),
-    registerFail: (payload) => dispatch(registerFail(payload)),
+    registerFail: () => dispatch(registerFail()),
     setAlert: (payload) => dispatch(setAlert(payload)),
   };
 };

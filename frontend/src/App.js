@@ -10,7 +10,7 @@ import Todolist from "./components/Todolist";
 import Alert from "./components/Alert";
 
 // Actions
-import { loadUser } from "./actions/auth";
+
 import setAuthToken from "./utils/setAuthToken";
 // Redux
 import store from "./store";

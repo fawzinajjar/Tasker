@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: (payload) => dispatch(logout(payload)),
+    logout: () => dispatch(logout()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

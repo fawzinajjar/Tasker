@@ -35,14 +35,11 @@ const Signin = (props) => {
         props.setAlert("Signed in successfully");
       }
     } catch (error) {
-      try {
-        const errors = error.response.data.errors;
-        if (errors) {
-          errors.forEach((errors) => props.setAlert(errors.msg));
-        }
-      } catch {}
-
-      props.authenticationFail();
+      const errors = error.response.data.errors;
+      if (errors) {
+        errors.forEach((errors) => props.setAlert(errors.msg));
+        props.authenticationFail();
+      }
     }
   };
   // Redirect
@@ -101,7 +98,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    authenticationSuccess: () => dispatch(authenticationSuccess()),
+    authenticationSuccess: (payload) =>
+      dispatch(authenticationSuccess(payload)),
     authenticationFail: (payload) => dispatch(authenticationFail(payload)),
     setAlert: (payload) => dispatch(setAlert(payload)),
   };

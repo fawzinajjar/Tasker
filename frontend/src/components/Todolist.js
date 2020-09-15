@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Todos from "./Todos";
+
 import { connect } from "react-redux";
 import axios from "axios";
 import { setAlert } from "../actions/alert";
@@ -43,7 +43,6 @@ const Todolist = (props) => {
   }
   return (
     <>
-      <Todos />
       <div className="div">
         <span className="span">
           <input

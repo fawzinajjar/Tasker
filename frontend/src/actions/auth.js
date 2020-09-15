@@ -4,12 +4,7 @@ import {
   AUTHENTICATION_FAIL,
   AUTHENTICATION_SUCCESS,
   LOGOUT,
-  USER_LOADED,
-  USER_NOT_LOADED,
 } from "../actions/types";
-
-import axios from "axios";
-import setAuthToken from "../utils/setAuthToken";
 
 export const registerSuccess = (payload) => {
   return {
@@ -18,10 +13,9 @@ export const registerSuccess = (payload) => {
   };
 };
 
-export const registerFail = (payload) => {
+export const registerFail = () => {
   return {
     type: REGISTER_FAIL,
-    payload: payload,
   };
 };
 export const authenticationSuccess = (payload) => {
@@ -31,31 +25,13 @@ export const authenticationSuccess = (payload) => {
   };
 };
 
-export const authenticationFail = (payload) => {
+export const authenticationFail = () => {
   return {
     type: AUTHENTICATION_FAIL,
-    payload: payload,
   };
 };
-export const logout = (payload) => {
+export const logout = () => {
   return {
     type: LOGOUT,
   };
-};
-// User Load
-export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
-  try {
-    const res = await axios.get("http://localhost:5000/dashboard");
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: USER_NOT_LOADED,
-    });
-  }
 };
